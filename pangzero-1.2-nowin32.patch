@@ -1,0 +1,13 @@
+--- pangzero-1.2/bin/pangzero.orig	2007-06-28 08:08:40.000000000 +0100
++++ pangzero-1.2/bin/pangzero	2007-06-30 00:15:36.000000000 +0100
+@@ -4945,10 +4945,6 @@
+   eval("SDL::Quit"); warn $@ if $@;
+   $message = "Pang Zero $::Version died:\n$message";
+   if (&IsMicrosoftWindows()) {
+-    eval( '
+-      use Win32;
+-      Win32::MsgBox($message, MB_ICONEXCLAMATION, "Pang Zero error");
+-    ' );
+     return;
+   } elsif ($ENV{'DISPLAY'}) {
+     $message =~ s/\"/\\"/g;
