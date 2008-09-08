@@ -1,11 +1,12 @@
 Name:           pangzero
 Version:        1.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
 URL:            http://apocalypse.rulez.org/pangzero
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source1:        %{name}.desktop
 Patch0:         pangzero-1.2-nowin32.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
@@ -38,19 +39,6 @@ sed -i 's|UPiPang.mp3|UPiPang.ogg|' bin/pangzero
 %configure
 make %{?_smp_mflags}
 
-# Build desktop file
-cat >%{name}.desktop <<EOF
-[Desktop Entry]
-Encoding=UTF-8
-Name=Pang Zero
-GenericName=Super Pang Clone
-Comment=%{summary}
-Exec=%{name}
-Icon=%{name}
-Terminal=false
-Type=Application
-Categories=Game;ArcadeGame;
-EOF
 
 
 %install
@@ -60,9 +48,9 @@ mkdir -p %{buildroot}%{_datadir}/applications
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/
 install -m0644 data/UPiPang.ogg %{buildroot}%{_datadir}/%{name}
 
-desktop-file-install --vendor dribble \
+desktop-file-install --vendor "" \
                      --dir %{buildroot}%{_datadir}/applications \
-                     %{name}.desktop
+                     %{SOURCE1}
 
 install -m0644 data/icon.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
@@ -87,16 +75,19 @@ fi
 
 %files
 %defattr(-,root,root,-)
+%doc AUTHORS ChangeLog COPYING NEWS README
 %{_bindir}/pangzero
 %{_datadir}/%{name}
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
-%{_datadir}/applications/dribble-%{name}.desktop
+%{_datadir}/applications/%{name}.desktop
 %exclude %{_datadir}/%{name}/UPiPang.mp3
 %exclude %{_datadir}/%{name}/icon.ico
-%doc AUTHORS ChangeLog COPYING NEWS README
 
 
 %changelog
+* Mon Sep 08 2008 Xavier Lamien <lxtnow[at]gmail.com> - 1.3-2
+- Update for rpmfusion inclusion.
+
 * Mon Jan 07 2008 Ian Chapman <packages[AT]amiga-hardware.com> 1.3-1
 - Upgrade to 1.3
 - License change due to new guidelines
