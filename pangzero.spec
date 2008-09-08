@@ -24,7 +24,8 @@ play together.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+
 # Set the data location
 sed -i 's|$::DataDir = '`echo -e "\047\047"`'|$::DataDir = '`echo -e "\047%{_datadir}/%{name}\047"`'|' bin/pangzero
 
