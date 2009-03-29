@@ -1,6 +1,6 @@
 Name:           pangzero
 Version:        1.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
@@ -86,6 +86,9 @@ fi
 
 
 %changelog
+* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.3-3
+- rebuild for new F11 features
+
 * Mon Sep 08 2008 Xavier Lamien <lxtnow[at]gmail.com> - 1.3-2
 - Update for rpmfusion inclusion.
 
