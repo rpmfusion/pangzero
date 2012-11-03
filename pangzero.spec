@@ -1,19 +1,25 @@
 Name:           pangzero
-Version:        1.3
-Release:        4%{?dist}
+Version:        1.4.1
+Release:        1%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
 URL:            http://apocalypse.rulez.org/pangzero
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+# This was downloaded from: https://github.com/jwrdegoede/pangzero
+# Using githubs download current revision functionality
+# Note no proper tarbals there unfortunately :|
+Source0:        pangzero-master.tar.gz
 Source1:        %{name}.desktop
-Patch0:         pangzero-1.2-nowin32.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Patch0:         10_nowebpage.patch
 BuildArch:      noarch
 BuildRequires:  desktop-file-utils
 BuildRequires:  lame
-BuildRequires:  perl-SDL >= 2.1.0
+BuildRequires:  perl-SDL >= 2.536
 BuildRequires:  vorbis-tools
+BuildRequires:  perl(Module::Build)
+BuildRequires:  perl(File::ShareDir)
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(Time::HiRes)
 Requires:       hicolor-icon-theme
 
 %description
@@ -23,69 +29,59 @@ play together.
 
 
 %prep
-%setup -q
+%setup -q -n pangzero-master
 %patch0 -p1
 
-# Set the data location
-sed -i 's|$::DataDir = '`echo -e "\047\047"`'|$::DataDir = '`echo -e "\047%{_datadir}/%{name}\047"`'|' bin/pangzero
-
 # Convert audio, Fedora's SDL does not support MP3
-lame --silent --decode data/UPiPang.mp3 - | oggenc -Q - -o data/UPiPang.ogg ||:
-
-# Use the ogg instead of mp3
-sed -i 's|UPiPang.mp3|UPiPang.ogg|' bin/pangzero
+lame --silent --decode data/UPiPang.mp3 - | oggenc -Q - -o data/UPiPang.ogg
 
 
 %build
-%configure
-make %{?_smp_mflags}
-
+perl Build.PL --installdirs vendor
+./Build
 
 
 %install
-rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
+./Build install --destdir=%{buildroot}
+rm %{buildroot}%{perl_vendorarch}/auto/Games/PangZero/.packlist
 mkdir -p %{buildroot}%{_datadir}/applications
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/
-install -m0644 data/UPiPang.ogg %{buildroot}%{_datadir}/%{name}
-
 desktop-file-install --vendor "" \
                      --dir %{buildroot}%{_datadir}/applications \
                      %{SOURCE1}
-
 install -m0644 data/icon.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 
-%clean
-rm -rf %{buildroot}
-
-
 %post
-touch --no-create %{_datadir}/icons/hicolor || :
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-fi
-
+touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
 %postun
-touch --no-create %{_datadir}/icons/hicolor || :
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+if [ $1 -eq 0 ] ; then
+    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
+
+%posttrans
+gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING NEWS README
 %{_bindir}/pangzero
-%{_datadir}/%{name}
+%{perl_vendorlib}/Games
+%{perl_vendorlib}/auto
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
-%exclude %{_datadir}/%{name}/UPiPang.mp3
-%exclude %{_datadir}/%{name}/icon.ico
+%exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/UPiPang.mp3
+%exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/icon.ico
+%exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/icon.png
 
 
 %changelog
+* Sun Oct 28 2012 Hans de Goede <j.w.r.degoede@gmail.com> - 1.4.1-1
+- New upstream: https://github.com/jwrdegoede/pangzero
+- New upstream version 1.4.1, which works with latest perl-SDL
+
 * Wed Feb 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.3-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
