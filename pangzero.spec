@@ -1,6 +1,6 @@
 Name:           pangzero
 Version:        1.4.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
@@ -20,6 +20,7 @@ BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(File::ShareDir)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Time::HiRes)
+BuildRequires:  perl-generators
 Requires:       hicolor-icon-theme
 
 %description
@@ -78,6 +79,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Fri Sep 30 2016 Sérgio Basto <sergio@serjux.com> - 1.4.1-4
+- Add perl-generators to get proper requires/provides on F-25 and later
+
 * Fri Sep 30 2016 Sérgio Basto <sergio@serjux.com> - 1.4.1-3
 - Rebuild for Perl with locale (buildroot with glibc-all-langpacks)
 
