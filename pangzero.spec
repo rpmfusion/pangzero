@@ -1,6 +1,6 @@
 Name:           pangzero
 Version:        1.4.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
@@ -79,6 +79,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.4.1-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Fri Sep 30 2016 Sérgio Basto <sergio@serjux.com> - 1.4.1-4
 - Add perl-generators to get proper requires/provides on F-25 and later
 
