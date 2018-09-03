@@ -1,16 +1,16 @@
+%global github_repo https://github.com/jwrdegoede/pangzero/archive/%{commit}
+%global commit      737500d8c048a4b65d3c9c50f2598b04f4a637c8
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 Name:           pangzero
 Version:        1.4.1
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
 URL:            http://apocalypse.rulez.org/pangzero
-# This was downloaded from: https://github.com/jwrdegoede/pangzero
-# Using githubs download current revision functionality
-# Note no proper tarbals there unfortunately :|
-Source0:        pangzero-master.tar.gz
+Source0:        %{github_repo}/pangzero-%{shortcommit}.tar.gz
 Source1:        %{name}.desktop
-Patch0:         10_nowebpage.patch
 BuildArch:      noarch
 BuildRequires:  desktop-file-utils
 BuildRequires:  lame
@@ -30,11 +30,10 @@ play together.
 
 
 %prep
-%setup -q -n pangzero-master
-%patch0 -p1
+%setup -q -n pangzero-%{commit}
 
 # Convert audio, Fedora's SDL does not support MP3
-lame --silent --decode data/UPiPang.mp3 - | oggenc -Q - -o data/UPiPang.ogg
+#lame --silent --decode data/UPiPang.mp3 - | oggenc -Q - -o data/UPiPang.ogg
 
 
 %build
@@ -79,6 +78,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Mon Sep 03 2018 Sérgio Basto <sergio@serjux.com> - 1.4.1-10
+- New upstream commit
+
 * Fri Jul 27 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.4.1-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
