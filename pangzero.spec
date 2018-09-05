@@ -1,19 +1,18 @@
 %global github_repo https://github.com/jwrdegoede/pangzero/archive/%{commit}
-%global commit      737500d8c048a4b65d3c9c50f2598b04f4a637c8
+%global commit      259f9679773273cb0b8ec5026046f5f27af1b0c0
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           pangzero
 Version:        1.4.1
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
 URL:            http://apocalypse.rulez.org/pangzero
 Source0:        %{github_repo}/pangzero-%{shortcommit}.tar.gz
-Source1:        %{name}.desktop
 BuildArch:      noarch
 BuildRequires:  desktop-file-utils
-BuildRequires:  lame
+#BuildRequires:  lame
 BuildRequires:  perl-SDL >= 2.536
 BuildRequires:  vorbis-tools
 BuildRequires:  perl(Module::Build)
@@ -48,10 +47,11 @@ mkdir -p %{buildroot}%{_datadir}/applications
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/
 desktop-file-install --vendor "" \
                      --dir %{buildroot}%{_datadir}/applications \
-                     %{SOURCE1}
+                     %{name}.desktop
 install -m0644 data/icon.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 
+%if 0%{?rhel} && 0%{?rhel} < 8
 %post
 touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
@@ -63,6 +63,7 @@ fi
 
 %posttrans
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+%endif
 
 
 %files
@@ -72,12 +73,16 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{perl_vendorlib}/auto
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
-%exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/UPiPang.mp3
 %exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/icon.ico
 %exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/icon.png
 
 
 %changelog
+* Wed Sep 05 2018 Sérgio Basto <sergio@serjux.com> - 1.4.1-11
+- Upstream code now have pangzero.desktop
+- Use original mp3 (SDL now should support MP3)
+- Improve some scriplets
+
 * Mon Sep 03 2018 Sérgio Basto <sergio@serjux.com> - 1.4.1-10
 - New upstream commit
 
