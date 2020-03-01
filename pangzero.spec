@@ -4,12 +4,13 @@
 
 Name:           pangzero
 Version:        1.4.1
-Release:        15%{?dist}
+Release:        16%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
 URL:            http://apocalypse.rulez.org/pangzero
 Source0:        %{github_repo}/pangzero-%{shortcommit}.tar.gz
+Source3:        %{name}.appdata.xml
 BuildArch:      noarch
 BuildRequires:  desktop-file-utils
 #BuildRequires:  lame
@@ -49,6 +50,7 @@ desktop-file-install --vendor "" \
                      --dir %{buildroot}%{_datadir}/applications \
                      %{name}.desktop
 install -m0644 data/icon.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+install -m 0644 -D %{SOURCE3} %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 
 %if 0%{?rhel} && 0%{?rhel} < 8
@@ -75,9 +77,14 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/applications/%{name}.desktop
 %exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/icon.ico
 %exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/icon.png
+%{_metainfodir}/%{name}.appdata.xml
 
 
 %changelog
+* Sun Mar 01 2020 Sérgio Basto <sergio@serjux.com> - 1.4.1-16
+- Add appdata file, copied from
+  https://github.com/sanjayankur31/rpmfusion-appdata
+
 * Sun Mar 01 2020 Sérgio Basto <sergio@serjux.com> - 1.4.1-15
 - Add appdata file, copied from
   https://github.com/sanjayankur31/rpmfusion-appdata
