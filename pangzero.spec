@@ -4,7 +4,7 @@
 
 Name:           pangzero
 Version:        1.4.1
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
@@ -78,6 +78,10 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Sun Mar 01 2020 Sérgio Basto <sergio@serjux.com> - 1.4.1-15
+- Add appdata file, copied from
+  https://github.com/sanjayankur31/rpmfusion-appdata
+
 * Wed Feb 05 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.4.1-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
