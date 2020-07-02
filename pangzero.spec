@@ -4,7 +4,7 @@
 
 Name:           pangzero
 Version:        1.4.1
-Release:        16%{?dist}
+Release:        17%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
@@ -21,7 +21,9 @@ BuildRequires:  perl(File::ShareDir)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Time::HiRes)
 BuildRequires:  perl-generators
+BuildRequires:  perl-interpreter
 Requires:       hicolor-icon-theme
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 %description
 Pang Zero is a clone and enhancement of Super Pang, a fast-paced action game
@@ -71,8 +73,8 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README
 %{_bindir}/pangzero
-%{perl_vendorlib}/Games
-%{perl_vendorlib}/auto
+%{perl_vendorlib}/Games/
+%{perl_vendorlib}/auto/
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
 %exclude %{perl_vendorlib}/auto/share/dist/Games-PangZero/icon.ico
@@ -81,6 +83,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Thu Jul 02 2020 Paul Howarth <paul@city-fan.org> - 1.4.1-17
+- Perl 5.32 rebuild
+
 * Sun Mar 01 2020 Sérgio Basto <sergio@serjux.com> - 1.4.1-16
 - Add appdata file, copied from
   https://github.com/sanjayankur31/rpmfusion-appdata
