@@ -4,7 +4,7 @@
 
 Name:           pangzero
 Version:        1.4.1
-Release:        22%{?dist}
+Release:        23%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
@@ -83,6 +83,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Tue Jun 21 2022 Paul Howarth <paul@city-fan.org> - 1.4.1-23
+- Perl 5.36 rebuild
+
 * Wed Feb 09 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.4.1-22
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
