@@ -1,10 +1,10 @@
 %global github_repo https://github.com/jwrdegoede/pangzero/archive/%{commit}
-%global commit      259f9679773273cb0b8ec5026046f5f27af1b0c0
+%global commit      b3f9cb0b2e5634771446a9735a90ed9dfde1fd3c
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           pangzero
 Version:        1.4.1
-Release:        23%{?dist}
+Release:        24%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
@@ -71,7 +71,8 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog README
+%license COPYING
 %{_bindir}/pangzero
 %{perl_vendorlib}/Games/
 %{perl_vendorlib}/auto/
@@ -83,6 +84,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Sat Jul 16 2022 Hans de Goede <hans@hansg.org> - 1.4.1-24
+- Fix "Can't call method "format" on an undefined value" errors (rf#6325)
+
 * Tue Jun 21 2022 Paul Howarth <paul@city-fan.org> - 1.4.1-23
 - Perl 5.36 rebuild
 
