@@ -4,7 +4,7 @@
 
 Name:           pangzero
 Version:        1.4.1
-Release:        24%{?dist}
+Release:        25%{?dist}
 Summary:        A clone and enhancement of Super Pang
 Group:          Amusements/Games
 License:        GPLv2
@@ -84,6 +84,10 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Sun Aug 07 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.4.1-25
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
+  5.1
+
 * Sat Jul 16 2022 Hans de Goede <hans@hansg.org> - 1.4.1-24
 - Fix "Can't call method "format" on an undefined value" errors (rf#6325)
 
